@@ -1,0 +1,14 @@
+# Binary folder
+bin/
+
+# Settings folder
+.settings/
+
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
+
+# Eclipse Core
+.project
+
+# PDT-specific
+.buildpath
