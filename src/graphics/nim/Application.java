@@ -1,5 +1,7 @@
 package graphics.nim;
 
+import graphics.nim.tree.Tree;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -12,6 +14,7 @@ public class Application {
 		
 		frame.setTitle("Chess database");
 		frame.setResizable(false);
+		frame.setFocusable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		ChessScreen screen = new ChessScreen();
