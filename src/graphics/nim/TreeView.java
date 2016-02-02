@@ -25,6 +25,9 @@ public class TreeView extends JPanel implements MouseListener, MouseMotionListen
 	int vx = 0;
 	int vy = 0;
 	
+	int px = 0, py = 0;
+	float dx = 0, dy = 0;
+	
 	Node root = new Node("root");
 	String[] userMoves = {"e4", "d6", "Nf3", "Nf6", "Nc3", "g6", "d4", "Bg7"};
 	
@@ -148,14 +151,12 @@ public class TreeView extends JPanel implements MouseListener, MouseMotionListen
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -172,15 +173,18 @@ public class TreeView extends JPanel implements MouseListener, MouseMotionListen
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		vx = e.getX();
-		vy = e.getY();
+		dx = (e.getX() - px) / 10f;
+		dy = (e.getY() - px) / 10f;
+		vx += dx;
+		vy += dy;
+		px = e.getX();
+		py = e.getY();
 		render();
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
