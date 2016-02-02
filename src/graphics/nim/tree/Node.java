@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
+	public Node parent;
 	public String move;
 	public int count = 1;
 	public boolean selected = false;
@@ -16,6 +17,7 @@ public class Node {
 	
 	public Node addChild(String move) {
 		Node child = new Node(move);
+		child.parent = this;
 		
 		for (Node n: children) {
 			if (move.equals(n.move)) {
@@ -35,6 +37,34 @@ public class Node {
 			}
 		}
 		return null;
+	}
+	
+	public Node prev() {
+		if (parent == null) {
+			return this;
+		}
+
+		int index = parent.children.indexOf(this);
+		
+		try {
+			return parent.children.get(index-1);
+		} catch (IndexOutOfBoundsException e) {
+			return parent.children.get(index);
+		}
+	}
+	
+	public Node next() {
+		if (parent == null) {
+			return this;
+		}
+
+		int index = parent.children.indexOf(this);
+		
+		try {
+			return parent.children.get(index+1);
+		} catch (IndexOutOfBoundsException e) {
+			return parent.children.get(index);
+		}
 	}
 	
 	public int getBreadth() {

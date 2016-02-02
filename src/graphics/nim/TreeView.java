@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.List;
+import java.util.Stack;
 
 import javax.swing.JPanel;
 
@@ -21,6 +22,10 @@ public class TreeView extends JPanel implements MouseListener, MouseMotionListen
 	private Tree tree = new Tree();
 	public List<Game> games = null;
 	public Board board = new Board();
+	
+	private Stack<Integer> stack = new Stack<Integer>();
+	private int current = 0;
+	private Node currentNode;
 	
 	int vx = 0;
 	int vy = 0;
@@ -53,23 +58,43 @@ public class TreeView extends JPanel implements MouseListener, MouseMotionListen
 		for (Game game: games) {
 			tree.addGame(game);
 		}
+		
+		currentNode = tree.root.children.get(0);
 		selectNodes();
 		render();
 	}
-	
+//	
+//	public void clearNodeSelection() {
+//		
+//	}
+//	
 	public void selectNodes() {
 		Node rootCopy = tree.root;
 		rootCopy.selected = true;
 		
-		for (String userMove: userMoves) {
-			rootCopy = rootCopy.getChild(userMove);
-			
-			if (rootCopy == null) {
-				return;
-			}
-			
-			rootCopy.selected = true;
-		}
+//		for (Integer i: stack) {
+//			for (Node child: rootCopy.children) {
+//				child.selected = false;
+//			}
+//			
+//			rootCopy = rootCopy.children.get(i);
+//			rootCopy.selected = true;
+//			currentNode = rootCopy.children.get(0);
+//		}
+//		
+//		for (Node child: rootCopy.children) {
+//			
+//		}
+
+//		for (String userMove: userMoves) {
+//			rootCopy = rootCopy.getChild(userMove);
+//			
+//			if (rootCopy == null) {
+//				return;
+//			}
+//			
+//			rootCopy.selected = true;
+//		}
 	}
 	
 //	public void render() {
@@ -207,6 +232,32 @@ public class TreeView extends JPanel implements MouseListener, MouseMotionListen
 		if (e.getKeyCode() == KeyEvent.VK_D) {
 			vx += 10;
 		}
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			if (currentNode.parent != null) {
+				currentNode.selected = false;
+				currentNode = currentNode.parent;
+				currentNode.selected = true;
+			}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			currentNode = currentNode.children.get(0);
+			currentNode.selected = true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			currentNode.selected = false;
+			currentNode = currentNode.next();
+			currentNode.selected = true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			currentNode.selected = false;
+			currentNode = currentNode.prev();
+			currentNode.selected = true;
+		}
+		
+		for (Integer i: stack) {
+			System.out.println(i);
+		}
+		
 		render();
 	}
 
