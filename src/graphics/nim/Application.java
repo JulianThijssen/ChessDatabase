@@ -36,7 +36,7 @@ public class Application {
 		
 		List<Game> games;
 		try {
-			games = Parser.loadFile("Database.pgn");
+			games = Parser.loadFile("lichess_Nimthora_2016-02-02.pgn");
 			
 			//screen.loadGame(games.get(0));
 			treeView.loadDatabase(games);

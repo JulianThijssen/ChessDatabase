@@ -26,7 +26,7 @@ public class TreeView extends JPanel implements MouseListener, MouseMotionListen
 	int vy = 0;
 	
 	Node root = new Node("root");
-	String[] userMoves = {"e4", "d6", "d4", "Nf6", "Nc3", "g6", "Nf3", "Bg7"};
+	String[] userMoves = {"e4", "d6", "Nf3", "Nf6", "Nc3", "g6", "d4", "Bg7"};
 	
 	public Graphics g = null;
 	
@@ -128,11 +128,11 @@ public class TreeView extends JPanel implements MouseListener, MouseMotionListen
 	}
 	
 	public void renderNode(Node n, int x, int y) {
-		g.setColor(new Color(0xFFFFFF));
-		if (n.selected) {g.setColor(new Color(0xFF0000));}
+		g.setColor(Color.WHITE);
+		if (n.selected) {g.setColor(Color.RED);}
 		
 		g.fillOval(x - vx, y - vy, 32, 32);
-		g.setColor(new Color(0x000000));
+		g.setColor(Color.BLACK);
 		g.drawString(String.format("%s(%d)", n.move, n.count), x + 8 - vx, y + 16 - vy);
 	}
 

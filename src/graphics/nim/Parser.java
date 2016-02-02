@@ -35,18 +35,27 @@ public class Parser {
 			}
 			if (line.startsWith("[WhiteElo ")) {
 				String[] tokens = line.split("\"");
-				game.whiteElo = Integer.parseInt(tokens[1]);
+				try {
+					game.whiteElo = Integer.parseInt(tokens[1]);
+				} catch (NumberFormatException e) {
+					game.whiteElo = 0;
+				}
 			}
 			if (line.startsWith("[BlackElo ")) {
 				String[] tokens = line.split("\"");
-				game.blackElo = Integer.parseInt(tokens[1]);
+				
+				try {
+					game.blackElo = Integer.parseInt(tokens[1]);
+				} catch (NumberFormatException e) {
+					game.blackElo = 0;
+				}
 			}
 			if (line.startsWith("[TimeControl ")) {
 				String[] tokens = line.split("\"");
 				game.timeControl = tokens[1];
 			}
 			if (line.startsWith("[Termination")) {
-				if (line.contains("abandoned")) {
+				if (line.contains("abandoned") || line.contains("Abandoned")) {
 					game.termination = Termination.ABANDONED;
 				}
 			}
@@ -79,6 +88,7 @@ public class Parser {
 	}
 
 	public static List<String> extractMoves(String line) {
+		line = line.replaceAll("\\d+\\.", "");
 		String[] tokens = line.split(" ");
 		List<String> moves = new ArrayList<String>();
 		
@@ -86,7 +96,7 @@ public class Parser {
 			if (token.isEmpty() || token.length() < 2) {
 				continue;
 			}
-			
+
 			String[] parts = token.split("\\.");
 			if (parts.length > 1) {
 				moves.add(parts[1]);
@@ -100,7 +110,7 @@ public class Parser {
 	
 	public static void main(String[] args) {
 		try {
-			loadFile("Database.pgn");
+			loadFile("lichess_Nimthora_2016-02-02.pgn");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
